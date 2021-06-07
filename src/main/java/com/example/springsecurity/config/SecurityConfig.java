@@ -5,6 +5,7 @@ import com.example.springsecurity.filter.JWTAuthoriztionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -39,8 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/tasks/**").authenticated()
-                .anyRequest().permitAll()
+                .antMatchers("/tasks/index","/auth/login","/auth/register").permitAll()
+                .antMatchers("/tasks/dnmd").hasAuthority("ROLE_USER")
+//                .antMatchers("/tasks/**").authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthoriztionFilter(authenticationManager()))

@@ -27,4 +27,14 @@ public class TaskController {
         return "删除了id为:"+id+"的任务";
     }
 
+    @RequestMapping("/index")
+    public String index(){
+        return "cnmd";
+    }
+
+    @RequestMapping("/dnmd")
+    public String dnmd(){
+        return "dnmd";
+    }
+
 }
